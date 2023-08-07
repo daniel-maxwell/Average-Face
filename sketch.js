@@ -1,6 +1,7 @@
 var imgs = [];
 var avgImg;
 var numOfImages = 30;
+var currentImgIndex;
 
 //////////////////////////////////////////////////////////
 function preload() { // preload() runs once
@@ -17,11 +18,14 @@ function setup() {
     createCanvas(imgs[0].width * 2, imgs[0].height);
     pixelDensity(1);
     avgImg = createGraphics(imgs[0].width, imgs[0].height);
+
+    // Select a random image from the array
+    currentImgIndex = Math.floor(random(numOfImages));
 }
 //////////////////////////////////////////////////////////
 function draw() {
     background(125);
-    image(imgs[0], 0, 0);
+    image(imgs[currentImgIndex], 0, 0);
 
     for (let i = 0; i < numOfImages; i++) {
         imgs[i].loadPixels();
@@ -50,4 +54,11 @@ function draw() {
     avgImg.updatePixels();
     image(avgImg, imgs[0].width, 0);
     noLoop();
+}
+
+//////////////////////////////////////////////////////////
+function keyPressed() {
+    // Select a new random image whenever a key is pressed
+    currentImgIndex = Math.floor(random(numOfImages));
+    loop();  // Restart the draw loop to show the new image
 }
